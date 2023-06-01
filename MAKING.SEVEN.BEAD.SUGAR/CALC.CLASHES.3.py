@@ -109,11 +109,11 @@ for i in range(len(new_sug)):
         y_cord_sug.append(y1)
         z_cord_sug.append(z1)
         
-        ss1 = 'HETATM {:>5s}  C1 0VB {:>5s} {:>10.2f} {:>7.2f} {:>7.2f}{}'.format(str(ind), str(ind), x1, y1, z1, "\n")
+        ss1 = 'HETATM {:>5s}  C1 0VA {:>5s} {:>10.2f} {:>7.2f} {:>7.2f}{}'.format(str(ind), str(ind), x1, y1, z1, "\n")
         out1.writelines(ss1)
         ss2 = '{:>5d}0VA     C1{:>5d} {:>7.3f} {:>7.3f} {:>7.3f}{}'.format(ind, ind, x1, y1, z1, "\n")
         out2.writelines(ss2)
-        ss3 = ' {:>5s}       NB_2  {:>5s}    0VB     C1  {:>5s}{}'.format(str(ind), str(ind), str(ind), "\n")
+        ss3 = ' {:>5s}       NB_2  {:>5s}    0VA     C1  {:>5s}{}'.format(str(ind), str(ind), str(ind), "\n")
         out3.writelines(ss3)
         ss4 = '{:>5s}   {:>5s}   1        6.987500432e-01 2.000000000e+04{}'.format(str(ind), str(ss), "\n")
         out4.writelines(ss4)

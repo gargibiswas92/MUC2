@@ -1,0 +1,44 @@
+mkdir TEST
+cp * TEST/
+cd TEST/
+python GLYCAN.site.py INIT.CONF.gro 30
+
+python ATTACH.GLYCAN.py INIT.CONF.gro GLYCAN.PCT.txt 62.815 88.085 0.377
+python ADJUST.TOP.py INIT.top DEF.txt BOND.txt DIHED.txt BEAD1.top 
+python ADJUST.GRO.py INIT.CONF.gro GRO.txt BEAD1.gro
+
+python GEN.BEAD.COORD.2.py BEAD1.gro BOND.txt 0.9 112.205 122.189 INIT.2.txt
+python CALC.CLASHES.2.py INIT.2.txt BEAD1.gro COORD1.txt GRO1.txt DEF1.txt BOND1.txt INFO1.txt DIHED1.txt
+ADJUST.GRO.py BEAD1.gro GRO1.txt BEAD2.gro
+ADJUST.TOP.py BEAD1.top DEF1.txt BOND1.txt DIHED1.txt BEAD2.top
+
+python GEN.BEAD.COORD.3.py BEAD2.gro INFO1.txt 1.06 134.1 94.189 INIT.3.txt
+python CALC.CLASHES.3.py INIT.3.txt BEAD2.gro COORD2.txt GRO2.txt DEF2.txt BOND2.txt INFO2.txt DIHED2.txt
+ADJUST.GRO.py BEAD2.gro GRO2.txt BEAD3.gro
+ADJUST.TOP.py BEAD2.top DEF2.txt BOND2.txt DIHED2.txt BEAD3.top
+
+python GEN.BEAD.COORD.4.py BEAD3.gro INFO2.txt 1.01 140.20 149.19 INIT.4.txt
+python CALC.CLASHES.4.py INIT.4.txt BEAD3.gro COORD3.txt GRO3.txt DEF3.txt BOND3.txt INFO3.txt DIHED3.txt
+ADJUST.GRO.py BEAD3.gro GRO3.txt BEAD4.gro
+ADJUST.TOP.py BEAD3.top DEF3.txt BOND3.txt DIHED3.txt BEAD4.top
+
+
+python GEN.BEAD.COORD.4.py BEAD4.gro INFO3.txt 0.948 123.205 114.189 INIT.5.txt
+python CALC.CLASHES.4.py INIT.5.txt BEAD4.gro COORD4.txt GRO4.txt DEF4.txt BOND4.txt INFO4.txt DIHED4.txt
+ADJUST.GRO.py BEAD4.gro GRO4.txt BEAD5.gro
+ADJUST.TOP.py BEAD4.top DEF4.txt BOND4.txt DIHED4.txt BEAD5.top
+
+
+python GEN.BEAD.COORD.4.py BEAD5.gro INFO4.txt 0.948 123.205 114.189 INIT.6.txt
+python CALC.CLASHES.4.py INIT.6.txt BEAD5.gro COORD5.txt GRO5.txt DEF5.txt BOND5.txt INFO5.txt DIHED5.txt
+ADJUST.GRO.py BEAD5.gro GRO5.txt BEAD6.gro
+ADJUST.TOP.py BEAD5.top DEF5.txt BOND5.txt DIHED5.txt BEAD6.top
+
+python GEN.BEAD.COORD.4.py BEAD6.gro INFO5.txt 0.948 123.205 114.189 INIT.7.txt
+python CALC.CLASHES.ch.py INIT.7.txt BEAD6.gro COORD6.txt GRO6.txt DEF6.txt BOND6.txt INFO6.txt DIHED6.txt
+ADJUST.GRO.py BEAD6.gro GRO6.txt BEAD7.gro
+ADJUST.TOP.py BEAD6.top DEF6.txt BOND6.txt DIHED6.txt BEAD7.top
+
+sed -i '1i Macromolecule t= 25000.00000 step= 50000000\n43248' BEAD7.gro
+echo '  728.15833 728.15833 728.15833' >> BEAD7.gro
+

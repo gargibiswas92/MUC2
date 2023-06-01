@@ -113,7 +113,7 @@ for i in range(len(new_sug)):
         out1.writelines(ss1)
         ss2 = '{:>5d}0VA     C1{:>5d} {:>7.3f} {:>7.3f} {:>7.3f}{}'.format(ind, ind, x1, y1, z1, "\n")
         out2.writelines(ss2)
-        ss3 = ' {:>5s}       NB_2  {:>5s}    0VB     C1  {:>5s}{}'.format(str(ind), str(ind), str(ind), "\n")
+        ss3 = ' {:>5s}       NB_2  {:>5s}    0VA     C1  {:>5s}{}'.format(str(ind), str(ind), str(ind), "\n")
         out3.writelines(ss3)
         ss4 = '{:>5s}   {:>5s}   1        6.987500432e-01 2.000000000e+04{}'.format(str(ind), str(ss), "\n")
         out4.writelines(ss4)
