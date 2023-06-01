@@ -8,7 +8,7 @@ python ADJUST.TOP.py INIT.top DEF.txt BOND.txt DIHED.txt BEAD1.top
 python ADJUST.GRO.py INIT.CONF.gro GRO.txt BEAD1.gro
 
 python GEN.BEAD.COORD.2.py BEAD1.gro BOND.txt 0.9 112.205 122.189 INIT.2.txt
-python CALC.CLASHES.2.py INIT.2.txt BEAD1.gro COORD1.txt GRO1.txt DEF1.txt BOND1.txt INFO.txt DIHED.txt
+python CALC.CLASHES.2.py INIT.2.txt BEAD1.gro COORD1.txt GRO1.txt DEF1.txt BOND1.txt INFO1.txt DIHED1.txt
 ADJUST.GRO.py BEAD1.gro GRO1.txt BEAD2.gro
 ADJUST.TOP.py BEAD1.top DEF1.txt BOND1.txt DIHED1.txt BEAD2.top
 
