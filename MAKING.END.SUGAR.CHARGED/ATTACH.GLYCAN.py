@@ -172,7 +172,7 @@ for i in range(count_prot_s):
            yp2 = s2
            zp2 = s3
            p_to_resd = calc_dist(xp1, yp1, zp1, xp2, yp2, zp2)
-           if p_to_resd <= 1.0:
+           if p_to_resd <= 0.35:
               flag = 1
               break
            else:
@@ -191,7 +191,7 @@ for i in range(count_prot_s):
            ys2 = s2
            zs2 = s3
            s_to_resd = calc_dist(xs1, ys1, zs1, xs2, ys2, zs2)
-           if s_to_resd <= 1.2:
+           if s_to_resd <= 0.35:
               flag = 1
               break
            else:
