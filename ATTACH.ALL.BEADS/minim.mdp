@@ -1,0 +1,46 @@
+;Run control: Use Langevin dynamics. 
+integrator = steep
+;time step in reduced units. Since we use mass of a carbon=1, the time step is smaller that many other MD simulations. 
+dt = 0.0005 
+;number of integration steps 
+nsteps = 4000
+;frequency to write coordinates to output trajectory .trr file 
+nstxout = 0 
+;frequency to write velocities to output trajectory .trr file 
+nstvout = 0 
+;frequency to write energies to log file 
+nstlog = 500 
+xtc_grps = system
+;group(s) to write to energy file 
+energygrps = system
+;Frequency to update the neighbor list (and the long-range forces, 
+;when using twin-range cut-off's). 
+nstlist = 20 
+;Make a grid in the box and only check atoms in neighboring grid cells 
+;when constructing a new neighbor list every nstlist steps. 
+ns_type = grid 
+rlist = 3.0
+;treatment of electrostatic interactions 
+rcoulomb = 3.0 
+;treatment of van der waals interactions 
+rvdw = 3.0
+;this tells gromacs to use the tables that we give it, instead of the standard interaction types 
+coulombtype = Cut-off;User 
+vdwtype = Cut-off;User 
+;tables are not supported with verlet lists, meaning that calpha cannot scale
+;well with gromacs5. Usually this is not a problem since you only want to use
+;a single processor for small proteins. Note that -pd is not available in gromacs5
+;but instead openmp is used, but this is not available for cutoff-scheme group.
+;Basically, you should use gromacs4.6 for calpha!
+cutoff-scheme = Verlet; group
+
+;        Energy minimizing stuff
+;
+emtol                = 1000.0 ; Min. converges when the max force is < this (kJ mol?~@~S1 nm?~@~S1)
+emstep               = 0.01   ; Initial step size (in nm)
+
+freezegrps          = body
+freezedim           = Y Y Y
+ 
+comm_mode = angular ; center of mass velocity removal. Make sure you select what is proper for your simulation. 
+;NOTE on comm_mode: When using periodic boundary conditions, which improves the speed of neighbor searching, removing the angular velocity will lead to a warning at the grompp stage of simulations. So long as the box size is properly sized, such that your system does not cross the boundaries, then this warning is harmless and you can simply issue -maxwarn X, where X is the number of allowed warning messages.
