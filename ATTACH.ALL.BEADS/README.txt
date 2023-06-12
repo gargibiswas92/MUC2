@@ -1,3 +1,7 @@
+./loop_four.bead
+
+(modify the degree of glycosylation in this file)
+
 gmx editconf -f SUG.100.gro -c -d 2 -o center.gro -bt cubic
 
 gmx insert-molecules -ci sod.pdb -nmol 1 -box 10 10 10 -o chx_box.gro
