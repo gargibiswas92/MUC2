@@ -54,6 +54,11 @@ def calc_dist(x1, y1, z1, x2, y2, z2):
 
 def solve_coordinates(x2, y2, z2, x3, y3, z3, x33, y33, z33, inp3, inp4, inp5):
     nan_c = 0
+
+    x_s1 = 5000
+    y_s1 = 5000
+    z_s1 = 5000
+
     x,y,z = symbols('x, y, z', real=True)
     vec1 = math.sqrt(((x2 - x3)*(x2 - x3)) + ((y2 - y3)*(y2 - y3)) + ((z2 - z3)*(z2 - z3)))
     vec2 = math.sqrt(((x2 - x33)*(x2 - x33)) + ((y2 - y33)*(y2 - y33)) + ((z2 - z33)*(z2 - z33)))
@@ -82,10 +87,6 @@ def solve_coordinates(x2, y2, z2, x3, y3, z3, x33, y33, z33, inp3, inp4, inp5):
             x_s1 = float(x)
             y_s1 = float(y)
             z_s1 = float(sol1)
-        else:
-            x_s1 = 5000
-            y_s1 = 5000
-            z_s1 = 5000
         
     return x_s1, y_s1, z_s1
 

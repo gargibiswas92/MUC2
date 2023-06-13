@@ -1,8 +1,8 @@
 import sys
 
 infile1 = sys.argv[1]
-low_lim = sys.argv[2]
-up_lim = sys.argv[3]
+low_lim = int(sys.argv[2])
+up_lim = int(sys.argv[3])
 
 out1 = open('sod_def.txt', 'w')
 inp1 = open(infile1, 'r')
