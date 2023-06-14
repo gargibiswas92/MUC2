@@ -54,11 +54,9 @@ def calc_dist(x1, y1, z1, x2, y2, z2):
 
 def solve_coordinates(x2, y2, z2, x3, y3, z3, x33, y33, z33, inp3, inp4, inp5):
     nan_c = 0
-
     x_s1 = 5000
     y_s1 = 5000
     z_s1 = 5000
-
     x,y,z = symbols('x, y, z', real=True)
     vec1 = math.sqrt(((x2 - x3)*(x2 - x3)) + ((y2 - y3)*(y2 - y3)) + ((z2 - z3)*(z2 - z3)))
     vec2 = math.sqrt(((x2 - x33)*(x2 - x33)) + ((y2 - y33)*(y2 - y33)) + ((z2 - z33)*(z2 - z33)))
@@ -79,14 +77,14 @@ def solve_coordinates(x2, y2, z2, x3, y3, z3, x33, y33, z33, inp3, inp4, inp5):
         par4 = ((par3*(y2 - y3)) - (z2 - z3))/(x2 - x3)
         eq11 = (mult5 + (z*par4))**2 + (mult4 - (z*par3))**2 + (z - z2)**2 - (inp5)**2
         sol1, sol2 = solve(eq11, check=False)
-        #solv_z = str(sol1)
+        solv_z = str(sol1)
             
-        if type(sol1) == float:
+        if ('I' in solv_z) == False:
             y = y2 + mult4 - par3*float(sol1)
             x = x2 + mult5 + par4*float(sol1)
             x_s1 = float(x)
             y_s1 = float(y)
-            z_s1 = float(sol1)
+            z_s1 = float(solv_z)
         
     return x_s1, y_s1, z_s1
 
@@ -104,7 +102,8 @@ def check_real(list, def_val):
 def calc_prot_clashes(num, s1, s2, s3, x_cord_prot, y_cord_prot, z_cord_prot, min_dis):
     flag = 0      
     for m in range(len(x_cord_prot)):
-        if m != num and m != (num+1) and m != (num-1) and m != (num+2) and m != (num-2) and m != (num+3) and m != (num-3) and m != (num+4) and m != (num-4):
+#        if m != num and m != (num+1) and m != (num-1) and m != (num+2) and m != (num-2) and m != (num+3) and m != (num-3) and m != (num+4) and m != (num-4):
+        if m != num and m != (num+1) and m != (num-1) and m != (num+2) and m != (num-2) and m != (num+3) and m != (num-3):
            xp1, yp1, zp1 = read_coordinates(num, x_cord_prot, y_cord_prot, z_cord_prot)
            
            xp2 = s1
@@ -116,6 +115,29 @@ def calc_prot_clashes(num, s1, s2, s3, x_cord_prot, y_cord_prot, z_cord_prot, mi
               flag = 1
               break
            else:
+              continue
+    return flag
+
+def calc_prot_clashes1(num, s1, s2, s3, x_cord_prot, y_cord_prot, z_cord_prot, min_dis):
+    flag = 0
+    list1 = []      
+    for i in range(num-10, num+10):
+        list1.append(i)
+        
+    for m in range(len(x_cord_prot)):
+        for item in list1:
+            num2 = item
+            xp1, yp1, zp1 = read_coordinates(num2, x_cord_prot, y_cord_prot, z_cord_prot)
+           
+            xp2 = s1
+            yp2 = s2
+            zp2 = s3
+            p_to_resd = calc_dist(xp1, yp1, zp1, xp2, yp2, zp2)
+           
+            if p_to_resd <= min_dis:
+              flag = 1
+              break
+            else:
               continue
     return flag
 
@@ -226,10 +248,10 @@ for k in range(count_prot_s):
     x2, y2, z2 = read_coordinates(num, x_cord_prot, y_cord_prot, z_cord_prot)
     x3, y3, z3 = read_coordinates(num+1, x_cord_prot, y_cord_prot, z_cord_prot)
     x33, y33, z33 = read_coordinates(num-1, x_cord_prot, y_cord_prot, z_cord_prot)
-    xs, ys, zs = solve_coordinates(x2, y2, z2, x3, y3, z3, x33, y33, z33, 117.0, 92.0, 0.38)
-    xs1, ys1, zs1 = solve_coordinates(x2, y2, z2, x3, y3, z3, x33, y33, z33, 116.0, 90.0, 0.71)
-    xs2, ys2, zs2 = solve_coordinates(x2, y2, z2, x3, y3, z3, x33, y33, z33, 116.4, 92.7, 1.12)
-    xs3, ys3, zs3 = solve_coordinates(x2, y2, z2, x3, y3, z3, x33, y33, z33, 115.5, 90.9, 1.59)
+    xs, ys, zs = solve_coordinates(x2, y2, z2, x3, y3, z3, x33, y33, z33, 117.0, 92.0, 0.39)
+    xs1, ys1, zs1 = solve_coordinates(x2, y2, z2, x3, y3, z3, x33, y33, z33, 116.0, 90.0, 0.73)
+    xs2, ys2, zs2 = solve_coordinates(x2, y2, z2, x3, y3, z3, x33, y33, z33, 116.4, 92.7, 1.15)
+    xs3, ys3, zs3 = solve_coordinates(x2, y2, z2, x3, y3, z3, x33, y33, z33, 115.5, 90.9, 1.63)
     
     max_val = len(res_num) 
     
@@ -237,7 +259,7 @@ for k in range(count_prot_s):
     fl = check_real(solution, 5000)
     if fl == 0:
         print(solution)
-        val1 = calc_prot_clashes(num, xs, ys, zs, x_cord_prot, y_cord_prot, z_cord_prot, 0.35)
+        val1 = calc_prot_clashes1(num, xs, ys, zs, x_cord_prot, y_cord_prot, z_cord_prot, 0.38)
         val2 = calc_prot_clashes(num, xs1, ys1, zs1, x_cord_prot, y_cord_prot, z_cord_prot, 0.35)
         val3 = calc_prot_clashes(num, xs2, ys2, zs2, x_cord_prot, y_cord_prot, z_cord_prot, 0.35)
         val4 = calc_prot_clashes(num, xs3, ys3, zs3, x_cord_prot, y_cord_prot, z_cord_prot, 0.35)

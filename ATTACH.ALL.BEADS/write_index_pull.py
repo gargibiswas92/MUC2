@@ -11,6 +11,8 @@ sug3 = ind[:,4]
 sug4 = ind[:,5]
 
 max_val = int(max(sug4))
+ch_sug = int(max(sug_ind))
+max_sys = max_val + ch_sug
 
 def create_list(low_lim, up_lim):
     name = []
@@ -67,7 +69,7 @@ body_d = create_list(7237, 9649)
 body_bb = create_list(12061, 14473)
 body = create_list(1, 16886)
 tail = create_list(16885, max_val)
-system = create_list(1, max_val)
+system = create_list(1, max_sys)
 
 write_index_file(body_a, 'body_a', out1)
 write_index_file(body_b, 'body_b', out1)
