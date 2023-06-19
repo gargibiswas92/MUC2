@@ -3,7 +3,7 @@ integrator = sd
 ;time step in reduced units. Since we use mass of a carbon=1, the time step is smaller that many other MD simulations. 
 dt = 0.0005 
 ;number of integration steps 
-nsteps = 100000 ; 0.5 ns
+nsteps = 200000 ; 1 ns
 ;frequency to write coordinates to output trajectory .trr file 
 nstxout = 0 
 ;frequency to write velocities to output trajectory .trr file 
@@ -46,12 +46,12 @@ table-extension = 15 ; (nm) !IMPORTANT! Set this so that rvdw + table-extension 
 ;Temperature coupling 
 tc-grps = system 
 tau_t = 1.0 ; Temperature coupling time constant. Smaller values = stronger coupling. 
-ref_t = 80.0 ; In reduced units (see Gromacs Manual for explanation. We find many proteins fold around T=100-120) 
+ref_t = 120.0 ; In reduced units (see Gromacs Manual for explanation. We find many proteins fold around T=100-120) 
 ;Pressure coupling 
 Pcoupl = no 
 ;Velocity generation 
 gen_vel = yes 
-gen_temp = 80.0 
+gen_temp = 120.0 
 gen_seed = -1 
 ld_seed = -1
 freezegrps          = body

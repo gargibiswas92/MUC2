@@ -10,9 +10,9 @@ nstxout = 0
 nstvout = 0 
 ;frequency to write energies to log file 
 nstlog = 500 
-xtc_grps = system 
+xtc_grps = system
 ;group(s) to write to energy file 
-energygrps = system 
+energygrps = system
 ;Frequency to update the neighbor list (and the long-range forces, 
 ;when using twin-range cut-off's). 
 nstlist = 20 

@@ -1,0 +1,5 @@
+REMARK  GENERATE LIGAND                                                               
+REMARK   DATE:     6/11/23      7: 4:20      CREATED BY USER: apache                  
+ATOM      1  SOD SOD S   1       0.000   0.000   0.000  1.00  0.00      SOD 
+TER       2      SOD      1
+END

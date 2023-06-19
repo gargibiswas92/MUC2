@@ -1,0 +1,173 @@
+;Run control: Use Langevin dynamics. 
+integrator = sd
+;time step in reduced units. Since we use mass of a carbon=1, the time step is smaller that many other MD simulations. 
+dt = 0.0005 
+;number of integration steps 
+nsteps = 8000000 ; 4ns
+;frequency to write coordinates to output trajectory .trr file 
+nstxout = 0 
+;frequency to write velocities to output trajectory .trr file 
+nstvout = 0 
+;frequency to write energies to log file 
+nstlog = 500 
+;frequency to write energies to energy file 
+nstenergy = 5000 
+;frequency to write coordinates to .xtc trajectory 
+nstxtcout = 1000 
+;group(s) to write to .xtc trajectory. 
+;NOTE: group name "system" is defined if you are NOT using an index file. If you use an index file, all group references need to be consistent with the names given in the index file. Our webpage, by default, names the chains "1", "2", ... You can change these names to whatever you like, just make sure the mdp file uses the same naming scheme. For more information on group usage, please consult the Gromacs manual. 
+xtc_grps = system 
+;group(s) to write to energy file 
+energygrps = system 
+;Frequency to update the neighbor list (and the long-range forces, 
+;when using twin-range cut-off's). 
+nstlist = 60 
+;Make a grid in the box and only check atoms in neighboring grid cells 
+;when constructing a new neighbor list every nstlist steps. 
+ns_type = grid 
+rlist = 3.0
+;treatment of electrostatic interactions 
+rcoulomb = 3.0 
+;treatment of van der waals interactions 
+rvdw = 3.0
+;this tells gromacs to use the tables that we give it, instead of the standard interaction types 
+coulombtype = Cut-off ;User 
+vdwtype = Cut-off; User 
+;tables are not supported with verlet lists, meaning that calpha cannot scale
+;well with gromacs5. Usually this is not a problem since you only want to use
+;a single processor for small proteins. Note that -pd is not available in gromacs5
+;but instead openmp is used, but this is not available for cutoff-scheme group.
+;Basically, you should use gromacs4.6 for calpha!
+cutoff-scheme = Verlet ;group
+verlet-buffer-tolerance = -1
+; Periodic boundary conditions in all the directions 
+pbc = xyz
+table-extension = 15 ; (nm) !IMPORTANT! Set this so that rvdw + table-extension equals half of the box's longest diagonal. 
+;Temperature coupling 
+tc-grps = system 
+tau_t = 1.0 ; Temperature coupling time constant. Smaller values = stronger coupling. 
+ref_t = 100.0 ; In reduced units (see Gromacs Manual for explanation. We find many proteins fold around T=100-120) 
+;Pressure coupling 
+Pcoupl = no 
+;Velocity generation 
+gen_vel = yes 
+gen_temp = 100.0 
+gen_seed = -1 
+ld_seed = -1
+freezegrps          = body  fix_tails 
+freezedim           = Y Y Y  Y Y Y
+
+; position restrain stuff:
+disre = simple
+disre_weighting = equal
+
+; pulling code:
+pull                    = yes
+pull_ncoords            = 10         ; only one reaction coordinate 
+pull_ngroups            = 11         ; two groups defining one reaction coordinate 
+pull_group1_name        = body_c
+pull_group2_name        = tail_c1
+pull_group3_name        = tail_c2
+pull_group4_name        = tail_c3
+pull_group5_name        = tail_c4
+pull_group6_name        = tail_c5 
+pull_group7_name        = tail_aa1
+pull_group8_name        = tail_aa2
+pull_group9_name        = tail_aa3
+pull_group10_name        = tail_aa4
+pull_group11_name        = tail_aa5
+
+
+
+ 
+pull_coord1_type        = umbrella  ; harmonic potential below distance threshold defined at pull-coord1-init
+pull_coord2_type        = umbrella
+pull_coord3_type        = umbrella
+pull_coord4_type        = umbrella
+pull_coord5_type        = umbrella
+pull_coord6_type        = umbrella
+pull_coord7_type        = umbrella
+pull_coord8_type        = umbrella
+pull_coord9_type        = umbrella
+pull_coord10_type        = umbrella
+pull_coord11_type        = umbrella
+
+
+
+pull_coord1_geometry    = distance  ; simple distance increase 
+pull_coord2_geometry    = distance
+pull_coord3_geometry    = distance
+pull_coord4_geometry    = distance
+pull_coord5_geometry    = distance
+pull_coord6_geometry    = distance
+pull_coord7_geometry    = distance
+pull_coord8_geometry    = distance
+pull_coord9_geometry    = distance
+pull_coord10_geometry    = distance
+pull_coord11_geometry    = distance
+
+
+pull_coord1_dim         = Y Y Y
+pull_coord2_dim         = Y Y Y
+pull_coord3_dim         = Y Y Y
+pull_coord4_dim         = Y Y Y
+pull_coord5_dim         = Y Y Y
+pull_coord6_dim         = Y Y Y
+pull_coord7_dim         = Y Y Y
+pull_coord8_dim         = Y Y Y
+pull_coord9_dim         = Y Y Y
+pull_coord10_dim         = Y Y Y
+pull_coord11_dim         = Y Y Y
+
+
+pull_coord1_groups       = 1 2
+pull_coord2_groups       = 1 3
+pull_coord3_groups       = 1 4
+pull_coord4_groups       = 1 5
+pull_coord5_groups       = 1 6
+pull_coord6_groups       = 1 7
+pull_coord7_groups       = 1 8
+pull_coord8_groups       = 1 9
+pull_coord9_groups       = 1 10
+pull_coord10_groups      = 1 11
+
+
+
+pull_coord1_start       = yes       ; define initial COM distance > 0
+pull_coord2_start       = yes
+pull_coord3_start       = yes
+pull_coord4_start       = yes
+pull_coord5_start       = yes
+pull_coord6_start       = yes
+pull_coord7_start       = yes
+pull_coord8_start       = yes
+pull_coord9_start       = yes
+pull_coord10_start       = yes
+
+
+
+pull_coord1_rate        = -0.01     ; 0.05 nm per ps = 50 nm per ns
+pull_coord2_rate        = -0.02
+pull_coord3_rate        = -0.035
+pull_coord4_rate        = -0.05
+pull_coord5_rate        = -0.065
+pull_coord6_rate        = -0.01   
+pull_coord7_rate        = -0.02
+pull_coord8_rate        = -0.035
+pull_coord9_rate        = -0.05
+pull_coord10_rate        = -0.065
+
+pull_coord1_k           = 1000      ; kJ mol^-1 nm^-2
+pull_coord2_k           = 1000
+pull_coord3_k           = 1000
+pull_coord4_k           = 1000
+pull_coord5_k           = 1000      ; kJ mol^-1 nm^-2
+pull_coord6_k           = 1000
+pull_coord7_k           = 1000
+pull_coord8_k           = 1000
+pull_coord9_k           = 1000      ; kJ mol^-1 nm^-2
+pull_coord10_k           = 1000
+
+ 
+comm_mode = none; angular ; center of mass velocity removal. Make sure you select what is proper for your simulation. 
+;NOTE on comm_mode: When using periodic boundary conditions, which improves the speed of neighbor searching, removing the angular velocity will lead to a warning at the grompp stage of simulations. So long as the box size is properly sized, such that your system does not cross the boundaries, then this warning is harmless and you can simply issue -maxwarn X, where X is the number of allowed warning messages.

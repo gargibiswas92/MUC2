@@ -1,0 +1,9 @@
+mkdir TEST
+cp * TEST/
+cd TEST/
+python GLYCAN.site.py INIT.CONF.gro 30
+python attach_four_bead.2.py INIT.CONF.gro GLYCAN.PCT.txt
+python ADJUST.GRO.py INIT.CONF.gro GRO.txt SUG.30.gro
+python ADJUST.TOP.py INIT.top DEF.txt BOND.txt DIHED.txt SUG.30.top
+sed -i '1i Macromolecule t= 25000.00000 step= 50000000\n43248' SUG.30.gro
+echo '  728.15833 728.15833 728.15833' >> SUG.30.gro

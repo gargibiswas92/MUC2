@@ -1,0 +1,10 @@
+mkdir SIX.BR
+cp * SIX.BR/
+cd SIX.BR/
+python GLYCAN.site.py EXT.CONF.gro 100
+python attach_six_bead_branch.2.py EXT.CONF.gro GLYCAN.PCT.txt
+python ADJUST.GRO.py EXT.CONF.gro GRO.txt SUG.100.gro
+python ADJUST.TOP.py INIT.top DEF.txt BOND.txt DIHED.txt SUG.100.top
+sed -i '1i Macromolecule t= 25000.00000 step= 50000000\n43248' SUG.100.gro
+
+
