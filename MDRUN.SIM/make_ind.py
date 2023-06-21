@@ -1,7 +1,18 @@
 outfile = open("index_new.ndx", "w")
 
-last1 = input("Enter the last bead number:")
-last = int(last1)
+
+ind = np.loadtxt('INDEX.txt')
+sug_ind = ind[:,0]
+prot_ind = ind[:,1]
+sug1 = ind[:,2]
+sug2 = ind[:,3]
+sug3 = ind[:,4]
+sug4 = ind[:,5]
+
+max_val = int(max(sug4))
+ch_sug = int(max(sug_ind))
+max_sys = max_val + ch_sug
+
 sp_0 = ["\n", "[ body ]","\n"]
 outfile.writelines(sp_0)
 count1 = 0 
@@ -19,7 +30,7 @@ for j in range(1,16885):
 sp_02 = ["\n","[ tails ]","\n"]
 outfile.writelines(sp_02)
 countp = 0
-for j in range(16885,last+1):
+for j in range(16885,ch_sug+1):
     countp = countp + 1
     if countp <= 15:
         sp_p = [str(j), " "]
@@ -34,7 +45,7 @@ for j in range(16885,last+1):
 sp_01 = ["\n","[ system ]","\n"]
 outfile.writelines(sp_01)
 count11 = 0 
-for j in range(1,last+1):
+for j in range(1,max_sys+1):
     count11 = count11 + 1
     if count11 <= 15:
         sp_11 = [str(j), " "]

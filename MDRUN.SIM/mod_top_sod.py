@@ -1,13 +1,23 @@
 import sys
+import numpy as np  
 
 infile1 = sys.argv[1]
-low_lim = int(sys.argv[2])
-up_lim = int(sys.argv[3])
+ind = np.loadtxt('INDEX.txt')
+sug_ind = ind[:,0]
+prot_ind = ind[:,1]
+sug1 = ind[:,2]
+sug2 = ind[:,3]
+sug3 = ind[:,4]
+sug4 = ind[:,5]
+
+max_val = int(max(sug4))
+ch_sug = int(max(sug_ind))
+max_sys = max_val + ch_sug
 
 out1 = open('sod_def.txt', 'w')
 inp1 = open(infile1, 'r')
 
-for ind in range(low_lim, up_lim):
+for ind in range(max_val+1, max_sys+1):
     ss3 = ' {:>5d}        SOD  {:>5d}    SOD    SOD  {:>5d}{}'.format(ind, ind, ind, "\n")
     out1.writelines(ss3)
     
