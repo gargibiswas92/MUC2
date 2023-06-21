@@ -1,3 +1,5 @@
+import numpy as np   
+
 outfile = open("index_new.ndx", "w")
 
 
