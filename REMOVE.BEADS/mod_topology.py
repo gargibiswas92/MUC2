@@ -1,4 +1,7 @@
-infile1 = input("Enter the name of the topology file:")
+import sys
+
+#infile1 = input("Enter the name of the topology file:")
+infile1 = sys.argv[1]
 
 inp1 = open(infile1, 'r')
 count = 0
@@ -35,8 +38,10 @@ for line2 in inp2:
 inp2.close()
 max_num = max(sug_num)
 aban_list = []
-print('The number of sugards present is :', max_num)
-num = int(input('Enter the total number of sugars you want to keep:'))
+#print('The number of sugards present is :', max_num)
+#num = int(input('Enter the total number of sugars you want to keep:'))
+
+num = int(sys.argv[2])
 
 for i in range(len(sug_num)):
     if sug_num[i] > num:
@@ -48,7 +53,7 @@ for i in range(len(sug_num)):
         continue
     
 inp3 = open(infile1, 'r')
-out1 = open('MOD.top', 'w')
+out1 = open('MOD_top.top', 'w')
 
 def write_def(line, aban_list):
     flag = 0
@@ -56,6 +61,8 @@ def write_def(line, aban_list):
     inde = int(arr1[0])
     if inde in aban_list:
         flag = 1
+    else:
+        flag = 0
     return flag
 
 def write_bond(line, aban_list):
@@ -63,10 +70,10 @@ def write_bond(line, aban_list):
     arr1 = line.split()
     inde = int(arr1[0])
     inde1 = int(arr1[1])
-    if inde in aban_list:
+    if inde in aban_list or inde1 in aban_list:
         flag = 1
-    if inde1 in aban_list:
-        flag = 1
+    else:
+        flag = 0
     return flag
         
 def write_dihedral(line, aban_list):
@@ -78,25 +85,43 @@ def write_dihedral(line, aban_list):
     inde3 = int(arr1[3])
     if inde in aban_list or inde1 in aban_list or inde2 in aban_list or inde3 in aban_list:
         flag = 1
+    else:
+        flag = 0
     return flag
+
+def write_file(fl, line, out1):
+    if fl == 0:
+        out1.writelines(line)
+    
 
 count1 = 0
 for line3 in inp3:
+    fl1 = 0
     count1 = count1 + 1
     if (count1 >= at_line + 2) and (count1 <= bo_line -2):
         fl1 = write_def(line3, aban_list)
-    if (count1 >= bo_line + 2) and (count1 <= di_line -3):
+        write_file(fl1, line3, out1)
+        
+    elif (count1 >= bo_line + 2) and (count1 <= di_line -3):
         if line3.startswith(';'):
+           fl1 = 0
+           write_file(fl1, line3, out1) 
+        elif line3.rstrip() == '':
             continue
-        if line3.strip():
-           fl1 = write_bond(line3, aban_list)
         else:
-            continue
-    if (count1 >= di_line + 2) and (count1 <= sy_line -3):
-        if line3.strip():
-           fl1 = write_dihedral(line3, aban_list) 
+            fl1 = write_bond(line3, aban_list)
+            write_file(fl1, line3, out1)
+           
+    elif (count1 >= di_line + 2) and (count1 <= sy_line -3):
+           if line3.rstrip() == '':
+               continue
+           else:
+               fl1 = write_dihedral(line3, aban_list)
+               write_file(fl1, line3, out1)
+           
     else:
-        fl1 = 0
-    if fl1 == 0:
-        out1.writelines(line3)
+           fl1 = 0
+           write_file(fl1, line3, out1)
+   
+    
 out1.close()    
