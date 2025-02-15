@@ -1,0 +1,11 @@
+echo "0 0" |gmx trjconv -s mdrun.tpr -f ch55.120.xtc -o mdnoPBC.ch55.120.xtc -pbc mol -center
+
+echo "0 0" |gmx trjconv -s mdrun.tpr -f mdnoPBC.ch55.120.xtc -dt 50 -o traj.ch55.120.pdb
+
+echo "0 0" |gmx gyrate -s mdrun.tpr -f mdnoPBC.ch55.120.xtc -o gyrate.ch55.120.xvg -dt 6
+
+echo "3" |gmx rmsf -s mdrun.tpr -f mdnoPBC.ch55.120.xtc -fit -o rmsf.ch55.120.xvg -dt 6
+
+echo "1 1" |gmx rms -s mdrun.tpr -f mdnoPBC.ch55.120.xtc -o rmsd.ch55.120.xvg -dt 6
+
+
